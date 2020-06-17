@@ -43,7 +43,6 @@ const UpdateMovie = (props) => {
             // useHistory.push('/movies')
             window.location.assign('/movies')
         })
-        
         .catch(err => {
             console.log('something went wrong')
         })
