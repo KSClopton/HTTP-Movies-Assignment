@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import MovieCard from "./MovieCard";
 
 function Movie({ addToSavedList }) {
@@ -13,7 +13,11 @@ function Movie({ addToSavedList }) {
       .then((res) => setMovie(res.data))
       .catch((err) => console.log(err.response));
   };
-
+  const deleteMovie = () => {
+    axios.delete(`http://localhost:5000/api/movies/${params.id}`)
+    .then(res => {window.location.assign('/movies')})
+    .catch(err => {console.log("Delete request denied")})
+  }
   const saveMovie = () => {
     addToSavedList(movie);
   };
@@ -32,6 +36,12 @@ function Movie({ addToSavedList }) {
 
       <div className="save-button" onClick={saveMovie}>
         Save
+      </div>
+      <div>
+      <Link key={movie.id} to={{pathname: `/update-movie/${movie.id}`}}>
+        <button>Update Movie</button>
+      </Link>
+      <button onClick={deleteMovie}>Delete Movie</button>
       </div>
     </div>
   );
